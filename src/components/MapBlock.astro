@@ -1,0 +1,30 @@
+---
+// Carte Google Maps — chargée UNIQUEMENT après consentement cookies (RGPD).
+// L'iframe utilise data-src + data-cc="marketing" ; cookie-consent.js l'active au consentement.
+import { site } from '../data/site.js';
+import { useTranslations } from '../i18n/ui.js';
+const { lang = 'fr' } = Astro.props;
+const t = useTranslations(lang);
+---
+<div class="map-block">
+  <div class="map-frame">
+    <iframe
+      title={t('contact.mapTitle')}
+      data-src={site.mapEmbedUrl}
+      data-cc="marketing"
+      width="100%" height="320" loading="lazy"
+      style="border:0" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <div class="map-consent" data-cc-placeholder>
+      <p>{t('contact.mapConsent')}</p>
+      <button type="button" class="btn btn-primary" data-cc-action="accept">{t('contact.mapEnable')}</button>
+    </div>
+  </div>
+</div>
+<style>
+  .map-frame{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--color-border);min-height:320px}
+  .map-frame iframe{display:block}
+  .map-consent{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;text-align:center;padding:1.5rem;background:var(--color-surface)}
+  .map-consent p{margin:0;color:var(--color-muted);max-width:42ch}
+  /* Quand l'iframe a une vraie src (consentement donné), on masque le voile */
+  iframe[src] + .map-consent{display:none}
+</style>

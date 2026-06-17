@@ -1,0 +1,76 @@
+---
+// Header sticky — logo + nav + CTA Commander + sélecteur de langue + menu mobile.
+import { useTranslations, localizedPath } from '../i18n/ui.js';
+import { site } from '../data/site.js';
+import LangSwitcher from './LangSwitcher.astro';
+const { lang = 'fr', pageKey = 'home' } = Astro.props;
+const t = useTranslations(lang);
+const nav = [
+  { key: 'home', label: t('nav.home') },
+  { key: 'menu', label: t('nav.menu') },
+  { key: 'gallery', label: t('nav.gallery') },
+  { key: 'contact', label: t('nav.contact') },
+];
+---
+<header class="site-header">
+  <div class="container header-inner">
+    <a href={localizedPath('home', lang)} class="brand">
+      <img src="/logo.png" alt="Bonus Kebab" height="46" width="46" />
+      <span class="brand-name">Bonus<span class="brand-accent">Kebab</span></span>
+    </a>
+
+    <nav class="nav" id="nav">
+      {nav.map((n) => (
+        <a href={localizedPath(n.key, lang)} class:list={['nav-link', { active: n.key === pageKey }]}>{n.label}</a>
+      ))}
+    </nav>
+
+    <div class="header-right">
+      <LangSwitcher lang={lang} pageKey={pageKey} />
+      <a class="btn btn-primary header-cta" href={site.orderUrl}>{t('cta.order')}</a>
+      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-nav" id="mobile-nav" hidden>
+    {nav.map((n) => (
+      <a href={localizedPath(n.key, lang)} class="mobile-link">{n.label}</a>
+    ))}
+    <a class="btn btn-primary" href={site.orderUrl}>{t('cta.order')}</a>
+  </nav>
+</header>
+
+<style>
+  .site-header{position:sticky;top:0;z-index:100;background:var(--color-bg);border-bottom:1px solid var(--color-border)}
+  .header-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.55rem 1.25rem}
+  .brand{display:flex;align-items:center;gap:.55rem;text-decoration:none}
+  .brand-name{font-family:var(--font-head);font-weight:700;font-size:1.2rem;color:var(--color-text)}
+  .brand-accent{color:var(--color-primary)}
+  .nav{display:flex;gap:1.3rem}
+  .nav-link{text-decoration:none;font-weight:600;color:var(--color-text);padding:.2rem 0;border-bottom:2px solid transparent}
+  .nav-link:hover,.nav-link.active{color:var(--color-primary);border-bottom-color:var(--color-primary)}
+  .header-right{display:flex;align-items:center;gap:.75rem}
+  .burger{display:none;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer;padding:.4rem}
+  .burger span{width:24px;height:3px;background:var(--color-text);border-radius:2px;transition:.2s}
+  .mobile-nav{display:flex;flex-direction:column;gap:.25rem;padding:.75rem 1.25rem 1.25rem;border-top:1px solid var(--color-border)}
+  .mobile-link{text-decoration:none;font-weight:600;padding:.6rem 0;border-bottom:1px solid var(--color-border)}
+  @media(max-width:860px){
+    .nav{display:none}
+    .header-cta{display:none}
+    .burger{display:flex}
+  }
+  @media(min-width:861px){ .mobile-nav{display:none !important} }
+</style>
+
+<script>
+  const burger = document.getElementById('burger');
+  const mobile = document.getElementById('mobile-nav');
+  if (burger && mobile) {
+    burger.addEventListener('click', () => {
+      const open = mobile.hidden;
+      mobile.hidden = !open;
+      burger.setAttribute('aria-expanded', String(open));
+    });
+  }
+</script>

@@ -1,0 +1,30 @@
+---
+import MapBlock from '../MapBlock.astro';
+import { useTranslations } from '../../i18n/ui.js';
+import { site } from '../../data/site.js';
+const { lang = 'fr' } = Astro.props;
+const t = useTranslations(lang);
+---
+<section class="section container">
+  <h1 class="section-title">{t('contact.title')}</h1>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <p><strong>{t('contact.address')}</strong><br />{site.address}</p>
+      <p><strong>{t('contact.phone')}</strong><br /><a href={site.phoneHref}>{site.phone}</a></p>
+      {site.email && <p><strong>{t('contact.email')}</strong><br /><a href={`mailto:${site.email}`}>{site.email}</a></p>}
+      <p><strong>{t('contact.hours')}</strong><br />{t('contact.hoursValue')}</p>
+      <p style="margin-top:1.5rem">
+        <a class="btn btn-primary" href={site.orderUrl}>{t('cta.orderOnline')}</a>
+        <a class="btn btn-outline" href={site.phoneHref}>{t('cta.callOrder')}</a>
+      </p>
+    </div>
+    <div class="contact-map">
+      <MapBlock lang={lang} />
+    </div>
+  </div>
+</section>
+<style>
+  .contact-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:2.5rem;align-items:start}
+  .contact-info p{margin:.4rem 0 1.1rem;line-height:1.5}
+  @media(max-width:760px){.contact-grid{grid-template-columns:1fr}}
+</style>

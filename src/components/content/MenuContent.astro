@@ -1,0 +1,16 @@
+---
+import MenuList from '../MenuList.astro';
+import { useTranslations } from '../../i18n/ui.js';
+import { site } from '../../data/site.js';
+const { lang = 'fr' } = Astro.props;
+const t = useTranslations(lang);
+---
+<section class="section container">
+  <h1 class="section-title">{t('menu.title')}</h1>
+  <p class="section-intro">{t('menu.intro')}</p>
+  <MenuList lang={lang} preview={false} />
+  <p style="text-align:center;margin-top:2.5rem">
+    <a class="btn btn-primary" href={site.orderUrl}>{t('cta.orderOnline')}</a>
+    <a class="btn btn-accent" href={site.woltUrl} target="_blank" rel="noopener">{t('cta.orderWolt')}</a>
+  </p>
+</section>

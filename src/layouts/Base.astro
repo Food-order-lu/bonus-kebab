@@ -1,0 +1,82 @@
+---
+// Layout de base — head SEO, hreflang, JSON-LD, header, footer, bandeau RGPD.
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+import { site } from '../data/site.js';
+import { routes, useTranslations } from '../i18n/ui.js';
+import '../styles/global.css';
+
+const {
+  lang = 'fr',
+  title = 'Bonus Kebab',
+  description = '',
+  pageKey = 'home',
+  image = '/og.jpg',
+} = Astro.props;
+
+const t = useTranslations(lang);
+const baseUrl = Astro.site ?? new URL('https://www.bonuskebab.lu');
+const canonical = new URL(routes[pageKey]?.[lang] ?? '/', baseUrl).toString();
+const alternates = Object.entries(routes[pageKey] ?? routes.home).map(([l, path]) => ({
+  hreflang: l,
+  href: new URL(path, baseUrl).toString(),
+}));
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <link rel="icon" type="image/png" href="/logo.png" />
+  {alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
+  <link rel="alternate" hreflang="x-default" href={alternates.find((a) => a.hreflang === 'fr')?.href} />
+  <!-- OpenGraph -->
+  <meta property="og:type" content="restaurant" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={image} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:locale" content={lang} />
+  <!-- Police Poppins (légère, 2 graisses) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet" />
+  <!-- JSON-LD Restaurant -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": site.name,
+    "image": new URL(image, baseUrl).toString(),
+    "url": baseUrl.toString(),
+    "servesCuisine": ["Kebab", "Pizza", "Turkish", "Fast food"],
+    "priceRange": "€",
+    "telephone": site.phone,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "41 Grand-Rue",
+      "postalCode": "9240",
+      "addressLocality": "Diekirch",
+      "addressCountry": "LU"
+    },
+    "openingHoursSpecification": [{
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+      "opens": "11:00",
+      "closes": "23:00"
+    }],
+    "sameAs": [site.instagram, site.facebook]
+  })} />
+</head>
+<body>
+  <Header lang={lang} pageKey={pageKey} />
+  <main>
+    <slot />
+  </main>
+  <Footer lang={lang} />
+  <CookieBanner lang={lang} />
+</body>
+</html>

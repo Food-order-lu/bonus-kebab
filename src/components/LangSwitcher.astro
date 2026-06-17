@@ -1,0 +1,21 @@
+---
+// Sélecteur de langue — pointe vers la version équivalente de la page courante.
+import { languages, localizedPath } from '../i18n/ui.js';
+const { lang = 'fr', pageKey = 'home' } = Astro.props;
+---
+<div class="lang-switcher" aria-label="Langue">
+  {Object.keys(languages).map((l) => (
+    <a
+      href={localizedPath(pageKey, l)}
+      class:list={['lang-link', { active: l === lang }]}
+      hreflang={l}
+      lang={l}
+    >{l.toUpperCase()}</a>
+  ))}
+</div>
+<style>
+  .lang-switcher{display:flex;gap:.25rem;align-items:center}
+  .lang-link{font-size:.8rem;font-weight:700;text-decoration:none;padding:.2rem .45rem;border-radius:6px;color:var(--color-muted)}
+  .lang-link.active{background:var(--color-accent);color:#1a1a1a}
+  .lang-link:not(.active):hover{color:var(--color-primary)}
+</style>

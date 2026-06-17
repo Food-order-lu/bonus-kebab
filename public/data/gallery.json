@@ -1,0 +1,10 @@
+{
+  "images": [
+    { "src": "/gallery/1.svg", "alt": "Kebab Bonus" },
+    { "src": "/gallery/2.svg", "alt": "Pizza maison" },
+    { "src": "/gallery/3.svg", "alt": "Dürüm" },
+    { "src": "/gallery/4.svg", "alt": "Assiette kebab" },
+    { "src": "/gallery/5.svg", "alt": "Frites maison" },
+    { "src": "/gallery/6.svg", "alt": "Notre maison" }
+  ]
+}

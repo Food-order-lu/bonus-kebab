@@ -1,0 +1,16 @@
+---
+// Section "Menu de la semaine" (Niveau 3) — placée juste sous le Hero.
+import WeeklyMenu from './WeeklyMenu.jsx';
+import { useTranslations } from '../i18n/ui.js';
+const { lang = 'fr' } = Astro.props;
+const t = useTranslations(lang);
+---
+<section class="section weekly" id="menu-semaine">
+  <div class="container">
+    <h2 class="section-title">{t('weekly.title')}</h2>
+    <WeeklyMenu client:visible emptyText={t('weekly.empty')} />
+  </div>
+</section>
+<style>
+  .weekly{background:var(--color-surface)}
+</style>

@@ -1,0 +1,49 @@
+---
+import Hero from '../Hero.astro';
+import WeeklyMenu from '../WeeklyMenu.astro';
+import MenuList from '../MenuList.astro';
+import Gallery from '../Gallery.jsx';
+import Reviews from '../Reviews.astro';
+import MapBlock from '../MapBlock.astro';
+import { useTranslations, localizedPath } from '../../i18n/ui.js';
+import { site } from '../../data/site.js';
+import galleryData from '../../../public/data/gallery.json';
+const { lang = 'fr' } = Astro.props;
+const t = useTranslations(lang);
+---
+<Hero lang={lang} image="/hero.jpg" />
+<WeeklyMenu lang={lang} />
+
+<!-- Notre histoire -->
+<section class="section container">
+  <h2 class="section-title">{t('story.title')}</h2>
+  <p class="section-intro">{t('story.text')}</p>
+</section>
+
+<!-- Aperçu carte -->
+<section class="section container" style="background:var(--color-surface)">
+  <h2 class="section-title">{t('menu.previewTitle')}</h2>
+  <MenuList lang={lang} preview={true} />
+</section>
+
+<!-- Bandeau CTA commande -->
+<section class="section container" style="text-align:center">
+  <a class="btn btn-primary" href={site.orderUrl}>{t('cta.orderOnline')}</a>
+  <a class="btn btn-accent" href={site.woltUrl} target="_blank" rel="noopener">{t('cta.orderWolt')}</a>
+</section>
+
+<!-- Galerie -->
+<section class="section container">
+  <h2 class="section-title">{t('gallery.title')}</h2>
+  <p class="section-intro">{t('gallery.intro')}</p>
+  <Gallery client:visible initial={galleryData.images} />
+</section>
+
+<Reviews lang={lang} />
+
+<!-- Contact + carte -->
+<section class="section container" id="contact">
+  <h2 class="section-title">{t('contact.mapTitle')}</h2>
+  <p class="section-intro">{site.address} · <a href={site.phoneHref}>{site.phone}</a> · {t('contact.hoursValue')}</p>
+  <MapBlock lang={lang} />
+</section>

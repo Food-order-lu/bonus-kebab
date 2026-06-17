@@ -1,0 +1,36 @@
+---
+// Bandeau RGPD — gratuit, auto-hébergé. Bloque les contenus tiers (Maps, etc.)
+// jusqu'au consentement. Multilingue.
+import { useTranslations, localizedPath } from '../i18n/ui.js';
+const { lang = 'fr' } = Astro.props;
+const t = useTranslations(lang);
+const texts = {
+  fr: { intro: 'Nous utilisons des cookies pour le bon fonctionnement du site et des services tiers (commande & réservation, carte).', more: 'En savoir plus', refuse: 'Refuser', settings: 'Personnaliser', accept: 'Tout accepter', essential: 'Essentiels', essentialNote: '(toujours actifs)', third: 'Services tiers', thirdNote: '(commande/réservation, carte)', save: 'Enregistrer mes choix' },
+  de: { intro: 'Wir verwenden Cookies für den Betrieb der Website und Drittanbieterdienste (Bestellung & Reservierung, Karte).', more: 'Mehr erfahren', refuse: 'Ablehnen', settings: 'Anpassen', accept: 'Alle akzeptieren', essential: 'Notwendig', essentialNote: '(immer aktiv)', third: 'Drittanbieter', thirdNote: '(Bestellung/Reservierung, Karte)', save: 'Auswahl speichern' },
+  en: { intro: 'We use cookies for the proper functioning of the site and third-party services (ordering & booking, map).', more: 'Learn more', refuse: 'Decline', settings: 'Customise', accept: 'Accept all', essential: 'Essential', essentialNote: '(always on)', third: 'Third-party services', thirdNote: '(ordering/booking, map)', save: 'Save my choices' },
+};
+const c = texts[lang] ?? texts.fr;
+const legalPath = localizedPath('legal', lang);
+---
+<div id="cc-banner" class="cc-banner" role="dialog" aria-live="polite" aria-label="Cookies" hidden>
+  <div class="cc-inner">
+    <p class="cc-text">
+      {c.intro} <a href={`${legalPath}#cookies`}>{c.more}</a>.
+    </p>
+    <div class="cc-actions">
+      <button type="button" class="cc-btn cc-refuse" data-cc-action="refuse">{c.refuse}</button>
+      <button type="button" class="cc-btn cc-settings" data-cc-action="settings">{c.settings}</button>
+      <button type="button" class="cc-btn cc-accept" data-cc-action="accept">{c.accept}</button>
+    </div>
+  </div>
+  <form id="cc-prefs" class="cc-prefs" hidden>
+    <label class="cc-row"><input type="checkbox" checked disabled /> {c.essential} <small>{c.essentialNote}</small></label>
+    <label class="cc-row"><input type="checkbox" name="marketing" data-cc="marketing" /> {c.third} <small>{c.thirdNote}</small></label>
+    <div class="cc-actions"><button type="button" class="cc-btn cc-accept" data-cc-action="save">{c.save}</button></div>
+  </form>
+</div>
+
+<style is:global>
+  @import '/cookie-consent.css';
+</style>
+<script src="/cookie-consent.js" is:inline></script>

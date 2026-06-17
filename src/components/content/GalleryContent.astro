@@ -1,0 +1,12 @@
+---
+import Gallery from '../Gallery.jsx';
+import { useTranslations } from '../../i18n/ui.js';
+import galleryData from '../../../public/data/gallery.json';
+const { lang = 'fr' } = Astro.props;
+const t = useTranslations(lang);
+---
+<section class="section container">
+  <h1 class="section-title">{t('gallery.title')}</h1>
+  <p class="section-intro">{t('gallery.intro')}</p>
+  <Gallery client:visible initial={galleryData.images} />
+</section>

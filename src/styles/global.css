@@ -1,0 +1,51 @@
+/* ============================================================
+   CHARTE GRAPHIQUE — Bonus Kebab (couleurs extraites du logo).
+   Rouge + jaune-or sur fond crème, texte noir. Style chaud & appétissant.
+   ============================================================ */
+:root{
+  --color-primary:#D72F2A;        /* rouge logo (CTA, accents) */
+  --color-primary-dark:#B0231F;
+  --color-accent:#F2A93B;         /* jaune-or logo */
+  --color-accent-dark:#D98E20;
+  --color-on-primary:#ffffff;
+  --color-bg:#ffffff;
+  --color-surface:#FFFBF5;        /* crème */
+  --color-text:#1A1A1A;
+  --color-muted:#6b6b6b;
+  --color-border:rgba(0,0,0,.08);
+
+  --font-head:'Poppins','Segoe UI',system-ui,sans-serif;
+  --font-body:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+
+  --maxw:1100px;
+  --radius:14px;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--font-body);color:var(--color-text);background:var(--color-bg);line-height:1.6}
+h1,h2,h3{font-family:var(--font-head);line-height:1.2;margin:0 0 .5em;font-weight:700}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 1.25rem}
+.section{padding:4rem 0}
+.section-title{text-align:center;margin-bottom:.5rem}
+.section-intro{text-align:center;color:var(--color-muted);max-width:54ch;margin:0 auto 2rem}
+
+/* Accent bar under section titles */
+.section-title::after{content:"";display:block;width:60px;height:4px;background:var(--color-accent);border-radius:2px;margin:.6rem auto 0}
+
+/* Omnipresent Food Order buttons */
+.btn{display:inline-block;padding:.7rem 1.4rem;border-radius:var(--radius);font-weight:700;text-decoration:none;cursor:pointer;border:2px solid var(--color-primary);transition:.15s;font-family:var(--font-head)}
+.btn-primary{background:var(--color-primary);color:var(--color-on-primary)}
+.btn-primary:hover{background:var(--color-primary-dark);border-color:var(--color-primary-dark)}
+.btn-outline{background:transparent;color:var(--color-primary)}
+.btn-outline:hover{background:var(--color-primary);color:var(--color-on-primary)}
+.btn-accent{background:var(--color-accent);border-color:var(--color-accent);color:#1a1a1a}
+.btn-accent:hover{background:var(--color-accent-dark);border-color:var(--color-accent-dark)}
+.btn + .btn{margin-left:.5rem}
+
+@media(max-width:480px){
+  .btn + .btn{margin-left:0;margin-top:.5rem}
+  .section{padding:3rem 0}
+}

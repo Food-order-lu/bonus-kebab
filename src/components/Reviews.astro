@@ -1,0 +1,35 @@
+---
+// Encart "Ils nous adorent" — avis Google/Tripadvisor.
+import { reviews, site } from '../data/site.js';
+import { useTranslations } from '../i18n/ui.js';
+const { lang = 'fr' } = Astro.props;
+const t = useTranslations(lang);
+const stars = (n) => '★'.repeat(n) + '☆'.repeat(5 - n);
+---
+<section class="section reviews">
+  <div class="container">
+    <h2 class="section-title">{t('reviews.title')}</h2>
+    <p class="section-intro">{t('reviews.intro')}</p>
+    <div class="reviews-grid">
+      {reviews.map((r) => (
+        <article class="review-card">
+          <div class="review-stars" aria-label={`${r.rating}/5`}>{stars(r.rating)}</div>
+          <p class="review-text">“{typeof r.text === 'string' ? r.text : (r.text[lang] ?? r.text.fr)}”</p>
+          <p class="review-author">— {r.author}</p>
+        </article>
+      ))}
+    </div>
+    <p class="reviews-cta">
+      <a class="btn btn-outline" href={site.googleReviewsUrl} target="_blank" rel="noopener">{t('reviews.seeMore')}</a>
+    </p>
+  </div>
+</section>
+<style>
+  .reviews{background:var(--color-surface)}
+  .reviews-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+  .review-card{background:var(--color-bg);border:1px solid var(--color-border);border-radius:var(--radius);padding:1.4rem}
+  .review-stars{color:var(--color-accent-dark);font-size:1.1rem;letter-spacing:2px}
+  .review-text{margin:.6rem 0;font-style:italic}
+  .review-author{margin:0;color:var(--color-muted);font-size:.85rem;font-weight:600}
+  .reviews-cta{text-align:center;margin-top:2rem}
+</style>
