@@ -1,11 +1,12 @@
 ---
-// Hero — image enseigne + tagline + CTA Commander / Wolt.
+// Hero — image enseigne + tagline + CTA Commander.
 import { useTranslations } from '../i18n/ui.js';
 import { site } from '../data/site.js';
 const { lang = 'fr', image = '/hero.jpg' } = Astro.props;
 const t = useTranslations(lang);
 ---
-<section class="hero" style={`background-image:url('${image}')`}>
+<section class="hero">
+  <img class="hero-bg" src={image} alt="" fetchpriority="high" />
   <div class="hero-overlay">
     <div class="container hero-content">
       <img src="/logo.png" alt="Bonus Kebab" class="hero-logo" width="120" height="120" />
@@ -13,18 +14,18 @@ const t = useTranslations(lang);
       <p class="hero-sub">{t('hero.subline')}</p>
       <div class="hero-cta">
         <a class="btn btn-primary" href={site.orderUrl}>{t('cta.orderOnline')}</a>
-        <a class="btn btn-accent" href={site.woltUrl} target="_blank" rel="noopener">{t('cta.orderWolt')}</a>
       </div>
     </div>
   </div>
 </section>
 <style>
-  .hero{min-height:78vh;background-size:cover;background-position:center;display:flex;align-items:center}
-  .hero-overlay{width:100%;background:linear-gradient(0deg,rgba(0,0,0,.65),rgba(0,0,0,.25));padding:4rem 0;color:#fff}
+  .hero{position:relative;min-height:80vh;display:flex;align-items:center;overflow:hidden;background:#1a1a1a}
+  .hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+  .hero-overlay{position:relative;z-index:1;width:100%;background:linear-gradient(0deg,rgba(0,0,0,.6),rgba(0,0,0,.2));padding:4rem 0;color:#fff}
   .hero-content{display:flex;flex-direction:column;align-items:center;text-align:center}
-  .hero-logo{background:#fff;border-radius:18px;padding:.4rem;box-shadow:0 8px 30px rgba(0,0,0,.3);margin-bottom:1.2rem}
-  .hero h1{font-size:clamp(2.4rem,6vw,4rem);margin:0}
-  .hero-sub{font-size:clamp(1.05rem,2.5vw,1.35rem);max-width:34ch;margin:.6rem 0 1.8rem}
+  .hero-logo{border-radius:50%;object-fit:cover;border:4px solid #fff;box-shadow:0 8px 30px rgba(0,0,0,.4);margin-bottom:1.2rem}
+  .hero h1{font-size:clamp(2.4rem,6vw,4rem);margin:0;text-shadow:0 2px 12px rgba(0,0,0,.5)}
+  .hero-sub{font-size:clamp(1.05rem,2.5vw,1.35rem);max-width:34ch;margin:.6rem 0 1.8rem;text-shadow:0 2px 10px rgba(0,0,0,.5)}
   .hero-cta{display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center}
   .hero-cta .btn + .btn{margin-left:0}
 </style>

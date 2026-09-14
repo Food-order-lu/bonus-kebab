@@ -1,26 +1,25 @@
 ---
-// Carte par sections (rendu serveur, excellent SEO). `preview` = aperçu accueil.
+// Carte LINÉAIRE par sections — petite photo + nom + prix aligné à droite.
 import { menu, tr } from '../data/menu.js';
 import { useTranslations, localizedPath } from '../i18n/ui.js';
 const { lang = 'fr', preview = false } = Astro.props;
 const t = useTranslations(lang);
-// En aperçu : 2 catégories phares (kebabs + pizzas), 3 items max chacune.
-const cats = preview ? menu.filter((c) => ['kebabs', 'pizzas'].includes(c.cat)) : menu;
+// En aperçu : 2 catégories phares (sandwich + pizza), 4 plats max chacune.
+const cats = preview ? menu.filter((c) => ['sandwich', 'pizza'].includes(c.cat)) : menu;
 ---
 <div class="menu-list">
-  {!preview && <p class="menu-demo-notice">{t('menu.demoNotice')}</p>}
   {cats.map((c) => (
     <section class="menu-cat">
       <h3 class="menu-cat-title">{t('menu.cat.' + c.cat)}</h3>
-      <ul class="menu-items">
-        {(preview ? c.items.slice(0, 3) : c.items).map((item) => (
-          <li class="menu-item">
-            <div class="menu-item-head">
-              <span class="menu-item-name">{tr(item.name, lang)}</span>
-              <span class="menu-item-dots"></span>
-              <span class="menu-item-price">{item.price}</span>
-            </div>
-            {item.desc && <p class="menu-item-desc">{tr(item.desc, lang)}</p>}
+      <ul class="menu-rows">
+        {(preview ? c.items.slice(0, 4) : c.items).map((item) => (
+          <li class="menu-row">
+            <button class="row-photo-btn" onclick={`menuLb.open('${item.img}','${tr(item.name, lang)}')`} aria-label={`Agrandir — ${tr(item.name, lang)}`}>
+              <img class="row-photo" src={item.img} alt={tr(item.name, lang)} loading="lazy" width="64" height="64" />
+            </button>
+            <span class="row-name">{tr(item.name, lang)}</span>
+            <span class="row-leader"></span>
+            {item.price && <span class="row-price">{item.price}</span>}
           </li>
         ))}
       </ul>
@@ -33,18 +32,63 @@ const cats = preview ? menu.filter((c) => ['kebabs', 'pizzas'].includes(c.cat)) 
     </p>
   )}
 </div>
+
+<!-- Photo lightbox -->
+<div id="menu-photo-lb" class="mplb" role="dialog" aria-modal="true">
+  <button class="mplb-close" aria-label="Fermer">✕</button>
+  <div class="mplb-content">
+    <img id="mplb-img" src="" alt="" />
+    <p id="mplb-caption"></p>
+  </div>
+</div>
+
+<script>
+  const lb = document.getElementById('menu-photo-lb');
+  const img = document.getElementById('mplb-img');
+  const cap = document.getElementById('mplb-caption');
+
+  window.menuLb = {
+    open(src, name) {
+      img.src = src;
+      img.alt = name;
+      cap.textContent = name;
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+  };
+
+  lb.querySelector('.mplb-close').addEventListener('click', close);
+  lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+
+  function close() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+</script>
 <style>
   .menu-list{max-width:760px;margin:0 auto}
   .menu-demo-notice{background:#fff6e5;border:1px solid var(--color-accent);border-radius:10px;padding:.7rem 1rem;font-size:.9rem;text-align:center}
-  .menu-cat{margin:2rem 0}
-  .menu-cat-title{color:var(--color-primary);border-bottom:2px solid var(--color-accent);padding-bottom:.3rem;display:inline-block}
-  .menu-items{list-style:none;padding:0;margin:1rem 0 0}
-  .menu-item{padding:.6rem 0;border-bottom:1px dashed var(--color-border)}
-  .menu-item-head{display:flex;align-items:baseline;gap:.5rem}
-  .menu-item-name{font-weight:700}
-  .menu-item-dots{flex:1;border-bottom:2px dotted var(--color-border);transform:translateY(-4px)}
-  .menu-item-price{font-weight:700;color:var(--color-primary)}
-  .menu-item-desc{margin:.2rem 0 0;color:var(--color-muted);font-size:.9rem}
-  .menu-allergens{margin-top:2rem;font-size:.85rem;color:var(--color-muted);text-align:center}
+  .menu-cat{margin:2.5rem 0}
+  .menu-cat-title{color:var(--color-primary);border-bottom:2px solid var(--color-accent);padding-bottom:.3rem;display:inline-block;margin-bottom:.6rem}
+  .menu-rows{list-style:none;padding:0;margin:0}
+  .menu-row{display:flex;align-items:center;gap:.9rem;padding:.6rem 0;border-bottom:1px dashed var(--color-border)}
+  .row-photo-btn{border:none;padding:0;background:none;cursor:zoom-in;border-radius:10px;flex-shrink:0;transition:transform .15s}
+  .row-photo-btn:hover{transform:scale(1.08)}
+  .row-photo{width:64px;height:64px;border-radius:10px;object-fit:cover;display:block}
+  .row-name{font-weight:700}
+  .row-leader{flex:1;border-bottom:2px dotted var(--color-border);transform:translateY(-3px);min-width:1rem}
+  .row-price{font-weight:700;color:var(--color-primary);white-space:nowrap}
+  .menu-allergens{margin-top:2.5rem;font-size:.85rem;color:var(--color-muted);text-align:center}
   .menu-more{text-align:center;margin-top:2rem}
+  @media(max-width:480px){.row-photo{width:52px;height:52px}.row-photo-btn{width:52px;height:52px}}
+
+  /* Lightbox */
+  .mplb{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;align-items:center;justify-content:center}
+  .mplb.open{display:flex}
+  .mplb-content{display:flex;flex-direction:column;align-items:center;gap:.8rem;max-width:min(90vw,480px)}
+  .mplb-content img{width:100%;height:auto;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+  .mplb-content p{color:#fff;font-size:1.1rem;font-weight:700;margin:0;text-align:center}
+  .mplb-close{position:fixed;top:1rem;right:1.2rem;background:rgba(255,255,255,.15);border:none;color:#fff;font-size:1.5rem;cursor:pointer;border-radius:50%;width:42px;height:42px;transition:background .2s}
+  .mplb-close:hover{background:rgba(255,255,255,.3)}
 </style>

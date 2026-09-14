@@ -1,6 +1,5 @@
 ---
 import Hero from '../Hero.astro';
-import WeeklyMenu from '../WeeklyMenu.astro';
 import MenuList from '../MenuList.astro';
 import Gallery from '../Gallery.jsx';
 import Reviews from '../Reviews.astro';
@@ -12,12 +11,40 @@ const { lang = 'fr' } = Astro.props;
 const t = useTranslations(lang);
 ---
 <Hero lang={lang} image="/hero.jpg" />
-<WeeklyMenu lang={lang} />
 
-<!-- Notre histoire -->
-<section class="section container">
-  <h2 class="section-title">{t('story.title')}</h2>
-  <p class="section-intro">{t('story.text')}</p>
+<!-- Distinctions / Awards -->
+<section class="section distinctions">
+  <div class="container">
+    <h2 class="distinctions-title">Nos Récompenses</h2>
+    <!-- Badges row -->
+    <div class="badges-row">
+      <a href="https://www.rtl.lu" target="_blank" rel="noopener" class="badge-link" aria-label="RTL Readers Choice Best Kebab Luxembourg 2024">
+        <img src="/rtl-badge.jpg" alt="RTL Readers' Choice — Best Kebab Luxembourg 2024 — Rank 5" class="badge-circle" />
+      </a>
+      <div class="badge-link">
+        <img src="/restaurant-guru.jpg" alt="Restaurant Guru 2026 — Bonus Kebap — Excellent Takeaway Food Diekirch" class="guru-flyer" />
+      </div>
+    </div>
+    <!-- Bannière Best of Wolt -->
+    <div class="wolt-banner-wrap">
+      <img src="/best-of-wolt.jpg" alt="Best of Wolt — Bonus Kebab — Top service, happy customers!" class="wolt-banner" />
+    </div>
+  </div>
+</section>
+
+<!-- Notre histoire + Origine du logo -->
+<section class="section story-section">
+  <div class="container">
+    <div class="story-layout">
+      <div class="story-text">
+        <h2 class="section-title story-title">{t('story.title')}</h2>
+        <p class="section-intro story-intro">{t('story.text')}</p>
+      </div>
+      <div class="story-logo-flyer">
+        <img src="/logo-origine.jpg" alt="Origine du logo Bonus Kebab — Plus qu'un nom, une identité" />
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- Aperçu carte -->
@@ -26,10 +53,9 @@ const t = useTranslations(lang);
   <MenuList lang={lang} preview={true} />
 </section>
 
-<!-- Bandeau CTA commande -->
+<!-- Bandeau CTA -->
 <section class="section container" style="text-align:center">
-  <a class="btn btn-primary" href={site.orderUrl}>{t('cta.orderOnline')}</a>
-  <a class="btn btn-accent" href={site.woltUrl} target="_blank" rel="noopener">{t('cta.orderWolt')}</a>
+  <a class="btn btn-outline" href="/carte">{lang === 'de' ? 'Karte als Bild ansehen' : lang === 'en' ? 'View menu image' : 'Voir la carte en image'}</a>
 </section>
 
 <!-- Galerie -->
@@ -40,6 +66,29 @@ const t = useTranslations(lang);
 </section>
 
 <Reviews lang={lang} />
+
+<style>
+  .distinctions{background:var(--color-surface);padding:2.5rem 0}
+  .distinctions-title{font-family:var(--font-head);font-size:1.3rem;font-weight:700;color:var(--color-text);text-align:center;margin:0 0 1.8rem}
+  .badges-row{display:flex;justify-content:center;align-items:center;gap:2.5rem;flex-wrap:wrap;margin-bottom:2rem}
+  .badge-link{display:flex;flex-direction:column;align-items:center;text-decoration:none;transition:transform .2s}
+  .badge-link:hover{transform:scale(1.06)}
+  .badge-circle{width:220px;height:220px;border-radius:50%;object-fit:cover;box-shadow:0 4px 18px rgba(0,0,0,.15)}
+  .guru-flyer{width:260px;height:auto;border-radius:16px;box-shadow:0 6px 24px rgba(0,0,0,.18)}
+  .wolt-banner-wrap{display:flex;justify-content:center;margin-top:2rem}
+  .wolt-banner{width:100%;max-width:700px;border-radius:16px;box-shadow:0 6px 24px rgba(0,0,0,.15)}
+  @media(max-width:540px){.badge-circle{width:150px;height:150px}.guru-flyer{width:100%;max-width:280px}}
+
+  /* Notre histoire + flyer logo */
+  .story-section{background:#111;padding:4rem 0}
+  .story-layout{display:flex;align-items:center;gap:3.5rem;flex-wrap:wrap}
+  .story-text{flex:1;min-width:240px}
+  .story-title{color:#fff;font-size:2rem}
+  .story-intro{color:#e0e0e0;text-align:left;max-width:none;font-size:1.1rem;line-height:1.8}
+  .story-logo-flyer{flex-shrink:0;width:300px}
+  .story-logo-flyer img{width:100%;border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+  @media(max-width:720px){.story-layout{flex-direction:column}.story-logo-flyer{width:100%;max-width:360px;margin:0 auto}}
+</style>
 
 <!-- Contact + carte -->
 <section class="section container" id="contact">

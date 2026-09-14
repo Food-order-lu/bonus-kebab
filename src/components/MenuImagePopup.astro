@@ -1,0 +1,213 @@
+---
+// Menu scan lightbox — place menu-page1.jpg & menu-page2.jpg in public/
+const pages = [
+  { src: '/menu-page1.jpg', alt: 'Carte Bonus Kebab — page 1' },
+  { src: '/menu-page2.jpg', alt: 'Carte Bonus Kebab — page 2' },
+];
+---
+
+<div class="menu-thumbs">
+  {pages.map((p, i) => (
+    <button class="thumb-btn" onclick={`openLightbox(${i})`} aria-label={p.alt}>
+      <img src={p.src} alt={p.alt} loading="lazy" onerror="this.closest('.thumb-btn').style.display='none'" />
+      <span class="thumb-zoom">🔍</span>
+    </button>
+  ))}
+</div>
+
+<!-- Lightbox overlay -->
+<div id="menu-lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Menu Bonus Kebab">
+  <button class="lb-close" onclick="closeLightbox()" aria-label="Fermer">✕</button>
+  <button class="lb-prev" onclick="lbNav(-1)" aria-label="Page précédente">‹</button>
+  <div class="lb-img-wrap">
+    <img id="lb-img" src="" alt="" />
+  </div>
+  <button class="lb-next" onclick="lbNav(1)" aria-label="Page suivante">›</button>
+  <div class="lb-dots">
+    {pages.map((_, i) => <span class="lb-dot" data-i={i}></span>)}
+  </div>
+</div>
+
+<script>
+  const pages = ['/menu-page1.jpg', '/menu-page2.jpg'];
+  let current = 0;
+
+  function openLightbox(i) {
+    current = i;
+    updateLb();
+    document.getElementById('menu-lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    document.getElementById('menu-lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function lbNav(dir) {
+    current = (current + dir + pages.length) % pages.length;
+    updateLb();
+  }
+
+  function updateLb() {
+    document.getElementById('lb-img').src = pages[current];
+    document.querySelectorAll('.lb-dot').forEach((d, i) =>
+      d.classList.toggle('active', i === current)
+    );
+  }
+
+  // Close on backdrop click
+  document.getElementById('menu-lightbox').addEventListener('click', (e) => {
+    if (e.target === e.currentTarget) closeLightbox();
+  });
+
+  // Keyboard nav
+  document.addEventListener('keydown', (e) => {
+    const lb = document.getElementById('menu-lightbox');
+    if (!lb.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') lbNav(-1);
+    if (e.key === 'ArrowRight') lbNav(1);
+  });
+
+  // Make openLightbox global for onclick attributes
+  window.openLightbox = openLightbox;
+  window.closeLightbox = closeLightbox;
+  window.lbNav = lbNav;
+</script>
+
+<style>
+  .menu-thumbs {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 1.5rem 0 2rem;
+  }
+
+  .thumb-btn {
+    position: relative;
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    background: none;
+    padding: 0;
+    width: 200px;
+    transition: border-color .2s, transform .2s;
+  }
+
+  .thumb-btn:hover {
+    border-color: var(--color-primary);
+    transform: scale(1.03);
+  }
+
+  .thumb-btn img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .thumb-zoom {
+    position: absolute;
+    bottom: .4rem;
+    right: .5rem;
+    background: rgba(0,0,0,.55);
+    color: #fff;
+    font-size: .85rem;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Lightbox */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.92);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .lightbox.open { display: flex; }
+
+  .lb-img-wrap {
+    max-width: min(90vw, 600px);
+    max-height: 90vh;
+    overflow: auto;
+    border-radius: 8px;
+  }
+
+  .lb-img-wrap img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+  }
+
+  .lb-close {
+    position: fixed;
+    top: 1rem;
+    right: 1.2rem;
+    background: rgba(255,255,255,.15);
+    border: none;
+    color: #fff;
+    font-size: 1.6rem;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    line-height: 1;
+    transition: background .2s;
+  }
+
+  .lb-close:hover { background: rgba(255,255,255,.3); }
+
+  .lb-prev, .lb-next {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,.12);
+    border: none;
+    color: #fff;
+    font-size: 2.5rem;
+    cursor: pointer;
+    padding: .3rem .8rem;
+    border-radius: 6px;
+    transition: background .2s;
+  }
+
+  .lb-prev { left: 1rem; }
+  .lb-next { right: 1rem; }
+  .lb-prev:hover, .lb-next:hover { background: rgba(255,255,255,.25); }
+
+  .lb-dots {
+    position: fixed;
+    bottom: 1.2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: .5rem;
+  }
+
+  .lb-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.4);
+    transition: background .2s;
+  }
+
+  .lb-dot.active { background: #fff; }
+
+  @media (max-width: 480px) {
+    .thumb-btn { width: 140px; }
+    .lb-prev { left: .3rem; }
+    .lb-next { right: .3rem; }
+  }
+</style>

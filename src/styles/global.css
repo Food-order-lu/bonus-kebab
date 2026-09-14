@@ -8,8 +8,8 @@
   --color-accent:#F2A93B;         /* jaune-or logo */
   --color-accent-dark:#D98E20;
   --color-on-primary:#ffffff;
-  --color-bg:#ffffff;
-  --color-surface:#FFFBF5;        /* crème */
+  --color-bg:#FFFDF8;             /* blanc chaud */
+  --color-surface:#FFF6E8;        /* crème dorée */
   --color-text:#1A1A1A;
   --color-muted:#6b6b6b;
   --color-border:rgba(0,0,0,.08);
@@ -23,7 +23,18 @@
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;font-family:var(--font-body);color:var(--color-text);background:var(--color-bg);line-height:1.6}
+body{
+  margin:0;
+  font-family:var(--font-body);
+  color:var(--color-text);
+  line-height:1.6;
+  background-color:var(--color-bg);
+  background-image:
+    radial-gradient(circle, rgba(215,47,42,0.045) 1px, transparent 1px),
+    radial-gradient(circle, rgba(242,169,59,0.035) 1px, transparent 1px);
+  background-size:28px 28px, 56px 56px;
+  background-position:0 0, 14px 14px;
+}
 h1,h2,h3{font-family:var(--font-head);line-height:1.2;margin:0 0 .5em;font-weight:700}
 img{max-width:100%;height:auto;display:block}
 a{color:inherit}

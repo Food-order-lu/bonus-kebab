@@ -27,17 +27,19 @@ const nav = [
 
     <div class="header-right">
       <LangSwitcher lang={lang} pageKey={pageKey} />
-      <a class="btn btn-primary header-cta" href={site.orderUrl}>{t('cta.order')}</a>
-      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
+      <!-- Checkbox CSS trick — fonctionne sans JS sur tous les mobiles -->
+      <label class="burger" for="nav-toggle" aria-label="Menu">
         <span></span><span></span><span></span>
-      </button>
+      </label>
     </div>
   </div>
-  <nav class="mobile-nav" id="mobile-nav" hidden>
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" />
+  <nav class="mobile-nav">
     {nav.map((n) => (
       <a href={localizedPath(n.key, lang)} class="mobile-link">{n.label}</a>
     ))}
-    <a class="btn btn-primary" href={site.orderUrl}>{t('cta.order')}</a>
+    <!-- Label X pour fermer -->
+    <label for="nav-toggle" class="mobile-close" aria-label="Fermer le menu">✕</label>
   </nav>
 </header>
 
@@ -45,32 +47,43 @@ const nav = [
   .site-header{position:sticky;top:0;z-index:100;background:var(--color-bg);border-bottom:1px solid var(--color-border)}
   .header-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.55rem 1.25rem}
   .brand{display:flex;align-items:center;gap:.55rem;text-decoration:none}
+  .brand img{border-radius:50%;object-fit:cover;border:2px solid var(--color-accent);box-shadow:0 1px 6px rgba(0,0,0,.2);background:#fff}
   .brand-name{font-family:var(--font-head);font-weight:700;font-size:1.2rem;color:var(--color-text)}
   .brand-accent{color:var(--color-primary)}
   .nav{display:flex;gap:1.3rem}
   .nav-link{text-decoration:none;font-weight:600;color:var(--color-text);padding:.2rem 0;border-bottom:2px solid transparent}
   .nav-link:hover,.nav-link.active{color:var(--color-primary);border-bottom-color:var(--color-primary)}
   .header-right{display:flex;align-items:center;gap:.75rem}
-  .burger{display:none;flex-direction:column;gap:4px;background:none;border:none;cursor:pointer;padding:.4rem}
+
+  /* Checkbox cachée */
+  .nav-toggle{display:none}
+
+  /* Burger = label */
+  .burger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:.4rem}
   .burger span{width:24px;height:3px;background:var(--color-text);border-radius:2px;transition:.2s}
-  .mobile-nav{display:flex;flex-direction:column;gap:.25rem;padding:.75rem 1.25rem 1.25rem;border-top:1px solid var(--color-border)}
-  .mobile-link{text-decoration:none;font-weight:600;padding:.6rem 0;border-bottom:1px solid var(--color-border)}
+
+  /* Menu mobile — caché par défaut */
+  .mobile-nav{display:none;flex-direction:column;gap:.25rem;padding:.75rem 1.25rem 1.25rem;border-top:1px solid var(--color-border)}
+  .mobile-link{text-decoration:none;font-weight:600;padding:.6rem 0;border-bottom:1px solid var(--color-border);display:block}
+
+  /* Bouton X fermeture */
+  .mobile-close{display:block;text-align:right;font-size:1.4rem;padding:.4rem 0;cursor:pointer;color:var(--color-muted)}
+
+  /* Quand checkbox cochée → afficher le menu */
+  .nav-toggle:checked ~ .mobile-nav{display:flex}
+
+  /* Burger X quand ouvert */
+  .nav-toggle:checked ~ .site-header .burger span:nth-child(1),
+  #nav-toggle:checked + * .burger span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+  #nav-toggle:checked + * .burger span:nth-child(2){opacity:0}
+  #nav-toggle:checked + * .burger span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
   @media(max-width:860px){
     .nav{display:none}
     .header-cta{display:none}
     .burger{display:flex}
   }
-  @media(min-width:861px){ .mobile-nav{display:none !important} }
-</style>
-
-<script>
-  const burger = document.getElementById('burger');
-  const mobile = document.getElementById('mobile-nav');
-  if (burger && mobile) {
-    burger.addEventListener('click', () => {
-      const open = mobile.hidden;
-      mobile.hidden = !open;
-      burger.setAttribute('aria-expanded', String(open));
-    });
+  @media(min-width:861px){
+    .mobile-nav{display:none !important}
   }
-</script>
+</style>

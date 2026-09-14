@@ -3,3 +3,6 @@ dist/
 .astro/
 .env
 .DS_Store
+*.zip
+TransferNow-*/
+WhatsApp Image*.jpeg

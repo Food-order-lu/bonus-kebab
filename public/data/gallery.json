@@ -1,10 +1,14 @@
 {
   "images": [
-    { "src": "/gallery/1.svg", "alt": "Kebab Bonus" },
-    { "src": "/gallery/2.svg", "alt": "Pizza maison" },
-    { "src": "/gallery/3.svg", "alt": "Dürüm" },
-    { "src": "/gallery/4.svg", "alt": "Assiette kebab" },
-    { "src": "/gallery/5.svg", "alt": "Frites maison" },
-    { "src": "/gallery/6.svg", "alt": "Notre maison" }
+    { "src": "/gallery/a01.jpg", "alt": "Broche de döner grillée" },
+    { "src": "/gallery/a02.jpg", "alt": "Crudités et garnitures fraîches" },
+    { "src": "/gallery/a03.jpg", "alt": "Boissons et baklava" },
+    { "src": "/gallery/a04.jpg", "alt": "Notre terrasse" },
+    { "src": "/gallery/a05.jpg", "alt": "Notre salle" },
+    { "src": "/gallery/a06.jpg", "alt": "Notre comptoir" },
+    { "src": "/gallery/a07.jpg", "alt": "Coin bar et snacks" },
+    { "src": "/gallery/a08.jpg", "alt": "Façade et terrasse" },
+    { "src": "/gallery/a09.jpg", "alt": "Enseigne — Always fresh taste" },
+    { "src": "/gallery/a10.jpg", "alt": "Notre terrasse" }
   ]
 }

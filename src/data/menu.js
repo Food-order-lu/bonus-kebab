@@ -1,51 +1,96 @@
 // ============================================================
-//  CARTE — contenu de DÉMONSTRATION.
-//  À REMPLACER par la vraie carte (scan fourni par le client),
-//  avec plats, prix et allergènes plat par plat.
-//  `name` peut être une string (identique dans toutes les langues) ou
-//  un objet { fr, de, en }. `allergens` = liste de codes (ex: 1,7,...).
+//  CARTE — chaque plat avec photo + prix.
+//  ⚠️ PRIX = EXEMPLES INDICATIFS (à confirmer/remplacer par le restaurant).
+//  Photos = /gallery/dXX.jpg (mêmes fichiers que la galerie).
+//  `name` : string (identique toutes langues) ou { fr, de, en }.
 // ============================================================
 export const menu = [
   {
-    cat: 'kebabs',
+    cat: 'sandwich',
     items: [
-      { name: 'Döner Kebab', desc: { fr: 'Pain pita, viande, salade, sauce', de: 'Pita, Fleisch, Salat, Soße', en: 'Pita, meat, salad, sauce' }, price: '6,50 €' },
-      { name: 'Dürüm', desc: { fr: 'Galette roulée, viande, crudités', de: 'Gerollter Wrap, Fleisch, Gemüse', en: 'Rolled wrap, meat, veggies' }, price: '7,00 €' },
-      { name: 'Assiette Kebab', desc: { fr: 'Viande, frites, salade, sauce', de: 'Fleisch, Pommes, Salat, Soße', en: 'Meat, fries, salad, sauce' }, price: '11,00 €' },
+      { name: 'Kebab poulet',        img: '/gallery/d05.jpg', price: '7,50 €' },
+      { name: 'Kebab veau',          img: '/gallery/d06.jpg', price: '9,00 €' },
+      { name: 'Brochette de poulet', img: '/gallery/d01.jpg', price: '8,50 €' },
+      { name: 'Köfte',               img: '/gallery/d07.jpg', price: '7,50 €' },
+      { name: 'Sucuk',               img: '/gallery/d08.jpg', price: '8,00 €' },
+      { name: 'Falafel',             img: '/gallery/d03.jpg', price: '7,50 €' },
+      { name: 'Hamburger',           img: '/gallery/d04.jpg', price: '7,00 €' },
+      { name: 'Cheeseburger',        img: '/gallery/d02.jpg', price: '7,50 €' },
     ],
   },
   {
-    cat: 'pizzas',
+    cat: 'assiette',
     items: [
-      { name: 'Margherita', desc: { fr: 'Tomate, mozzarella, basilic', de: 'Tomate, Mozzarella, Basilikum', en: 'Tomato, mozzarella, basil' }, price: '8,50 €' },
-      { name: 'Bonus Spéciale', desc: { fr: 'Viande kebab, oignons, poivrons', de: 'Kebabfleisch, Zwiebeln, Paprika', en: 'Kebab meat, onions, peppers' }, price: '11,50 €' },
-      { name: 'Calzone', desc: { fr: 'Pizza fermée, jambon, champignons', de: 'Gefüllte Pizza, Schinken, Pilze', en: 'Folded pizza, ham, mushrooms' }, price: '10,50 €' },
+      { name: 'Assiette Bonus',      img: '/gallery/d09.jpg', price: '19,00 €' },
+      { name: 'Kebab poulet',        img: '/gallery/d14.jpg', price: '14,50 €' },
+      { name: 'Kebab veau',          img: '/gallery/d15.jpg', price: '17,00 €' },
+      { name: 'Brochette de poulet', img: '/gallery/d10.jpg', price: '16,00 €' },
+      { name: 'Köfte',               img: '/gallery/d16.jpg', price: '14,00 €' },
+      { name: 'Sucuk',               img: '/gallery/d17.jpg', price: '15,00 €' },
+      { name: 'Falafel',             img: '/gallery/d12.jpg', price: '13,00 €' },
+      { name: 'Hamburger',           img: '/gallery/d13.jpg', price: '13,50 €' },
+      { name: 'Cheeseburger',        img: '/gallery/d11.jpg', price: '14,50 €' },
+    ],
+  },
+  {
+    cat: 'durum',
+    items: [
+      { name: 'Dürüm Spécial',         img: '/gallery/d19.jpg', price: '13,50 €' },
+      { name: 'Kebab poulet',          img: '/gallery/d21.jpg', price: '7,50 €' },
+      { name: 'Kebab veau',            img: '/gallery/d22.jpg', price: '9,00 €' },
+      { name: 'Brochette de poulet',   img: '/gallery/d18.jpg', price: '8,50 €' },
+      { name: 'Köfte',                 img: '/gallery/d23.jpg', price: '7,50 €' },
+      { name: 'Sucuk',                 img: '/gallery/d24.jpg', price: '8,00 €' },
+      { name: 'Falafel',               img: '/gallery/d20.jpg', price: '7,50 €' },
+      { name: 'Turkish Pizza poulet',  img: '/gallery/d25.jpg', price: '8,50 €' },
+      { name: 'Turkish Pizza veau',    img: '/gallery/d26.jpg', price: '9,50 €' },
+    ],
+  },
+  {
+    cat: 'pizza',
+    items: [
+      { name: 'Pizza Bonus',         img: '/gallery/d28.jpg', price: '19,00 €' },
+      { name: 'Margherita',          img: '/gallery/d35.jpg', price: '12,50 €' },
+      { name: '4 Fromages',          img: '/gallery/d27.jpg', price: '15,00 €' },
+      { name: 'Kebab poulet',        img: '/gallery/d32.jpg', price: '16,00 €' },
+      { name: 'Kebab veau',          img: '/gallery/d33.jpg', price: '17,00 €' },
+      { name: 'Poulet Grillé',       img: '/gallery/d29.jpg', price: '17,00 €' },
+      { name: 'Bœuf haché',          img: '/gallery/d30.jpg', price: '17,00 €' },
+      { name: 'Sucuk',               img: '/gallery/d37.jpg', price: '15,50 €' },
+      { name: 'Salami',              img: '/gallery/d36.jpg', price: '15,50 €' },
+      { name: 'Champignons',         img: '/gallery/d31.jpg', price: '14,00 €' },
+      { name: 'Végétarienne',        img: '/gallery/d34.jpg', price: '14,00 €' },
+      { name: 'Thon',                img: '/gallery/d38.jpg', price: '15,00 €' },
+    ],
+  },
+  {
+    cat: 'pide',
+    items: [
+      { name: 'Pide Bonus',          img: '/gallery/d39.jpg', price: '19,00 €' },
+      { name: 'Kebab poulet',        img: '/gallery/d44.jpg', price: '16,00 €' },
+      { name: 'Kebab veau',          img: '/gallery/d45.jpg', price: '17,00 €' },
+      { name: 'Poulet Grillé',       img: '/gallery/d40.jpg', price: '17,00 €' },
+      { name: 'Bœuf haché',          img: '/gallery/d41.jpg', price: '17,00 €' },
+      { name: 'Sucuk',               img: '/gallery/d48.jpg', price: '15,50 €' },
+      { name: 'Salami',              img: '/gallery/d47.jpg', price: '15,50 €' },
+      { name: 'Fromage blanc',       img: '/gallery/d43.jpg', price: '12,50 €' },
+      { name: 'Épinard',             img: '/gallery/d42.jpg', price: '13,50 €' },
+      { name: 'Légumes',             img: '/gallery/d46.jpg', price: '14,00 €' },
     ],
   },
   {
     cat: 'snacks',
     items: [
-      { name: 'Frites', desc: { fr: 'Portion maison', de: 'Hausgemachte Portion', en: 'Homemade portion' }, price: '3,00 €' },
-      { name: 'Nuggets (6)', desc: { fr: 'Servis avec sauce', de: 'Mit Soße serviert', en: 'Served with sauce' }, price: '5,00 €' },
-    ],
-  },
-  {
-    cat: 'drinks',
-    items: [
-      { name: 'Soft 33cl', desc: { fr: 'Coca, Fanta, Sprite…', de: 'Coca, Fanta, Sprite…', en: 'Coke, Fanta, Sprite…' }, price: '2,50 €' },
-      { name: 'Eau 50cl', desc: { fr: 'Plate ou gazeuse', de: 'Still oder sprudelnd', en: 'Still or sparkling' }, price: '2,00 €' },
-    ],
-  },
-  {
-    cat: 'desserts',
-    items: [
-      { name: 'Tiramisu', desc: { fr: 'Fait maison', de: 'Hausgemacht', en: 'Homemade' }, price: '4,00 €' },
-      { name: 'Baklava', desc: { fr: 'Pâtisserie orientale', de: 'Orientalisches Gebäck', en: 'Oriental pastry' }, price: '3,50 €' },
+      { name: 'Kebab Box poulet', img: '/gallery/d50.jpg', price: '7,50 €' },
+      { name: 'Kebab Box veau',   img: '/gallery/d51.jpg', price: '9,00 €' },
+      { name: 'Nuggets (7pcs)',   img: '/gallery/d52.jpg', price: '7,50 €' },
+      { name: 'Frites',           img: '/gallery/d53.jpg', price: '4,00 €' },
+      { name: 'Baklava',          img: '/gallery/d49.jpg', price: '3,50 €' },
     ],
   },
 ];
 
-// Petit utilitaire : renvoie la valeur dans la langue voulue (gère string ou {fr,de,en})
+// renvoie la valeur dans la langue voulue (string ou {fr,de,en})
 export function tr(value, lang) {
   if (value == null) return '';
   return typeof value === 'string' ? value : (value[lang] ?? value.fr ?? '');
