@@ -14,7 +14,8 @@ const t = useTranslations(lang);
       {site.email && <p><strong>{t('contact.email')}</strong><br /><a href={`mailto:${site.email}`}>{site.email}</a></p>}
       <p><strong>{t('contact.hours')}</strong><br />{t('contact.hoursValue')}</p>
       <p style="margin-top:1.5rem">
-        <a class="btn btn-primary" href={site.orderUrl}>{t('cta.orderOnline')}</a>
+        {/* TODO: commande en ligne désactivée temporairement (à remettre — cf. site.orderUrl) */}
+        <a class="btn btn-primary" href={site.orderUrl} hidden>{t('cta.orderOnline')}</a>
         <a class="btn btn-outline" href={site.phoneHref}>{t('cta.callOrder')}</a>
       </p>
     </div>

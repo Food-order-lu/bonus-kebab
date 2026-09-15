@@ -13,7 +13,8 @@ const t = useTranslations(lang);
       <h1>{t('hero.headline')}</h1>
       <p class="hero-sub">{t('hero.subline')}</p>
       <div class="hero-cta">
-        <a class="btn btn-primary" href={site.orderUrl}>{t('cta.orderOnline')}</a>
+        {/* TODO: commande en ligne désactivée temporairement (à remettre — cf. site.orderUrl) */}
+        <a class="btn btn-primary" href={site.orderUrl} hidden>{t('cta.orderOnline')}</a>
       </div>
     </div>
   </div>
